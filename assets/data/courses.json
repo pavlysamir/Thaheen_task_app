@@ -1,0 +1,92 @@
+{
+  "courses": [
+    {
+      "id": "anatomy-101",
+      "title": "مقدمة في علم التشريح الطبي",
+      "instructor": "د. سارة الأحمد",
+      "thumbnail": "assets/images/anatomy.jpg",
+      "sections": [
+        {
+          "id": "sec-anat-1",
+          "title": "الجهاز الهيكلي والعظمي",
+          "lessons": [
+            {
+              "id": "les-anat-101",
+              "title": "مدخل إلى تشريح العظام وتصنيفاتها",
+              "durationSec": 60,
+              "video": "assets/videos/lesson1.mp4"
+            },
+            {
+              "id": "les-anat-102",
+              "title": "المفاصل الزلالية وحركاتها الأساسية",
+              "durationSec": 45,
+              "video": "assets/videos/lesson2.mp4"
+            }
+          ]
+        },
+        {
+          "id": "sec-anat-2",
+          "title": "الجهاز العضلي ووظائفه",
+          "lessons": [
+            {
+              "id": "les-anat-103",
+              "title": "بنية الألياف العضلية الهيكلية",
+              "durationSec": 50,
+              "video": "assets/videos/lesson3.mp4"
+            },
+            {
+              "id": "les-anat-104",
+              "title": "آلية الانقباض والارتخاء العضلي",
+              "durationSec": 65,
+              "video": "assets/videos/lesson1.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pharma-201",
+      "title": "أساسيات علم الأدوية السريري",
+      "instructor": "د. عمر خالد",
+      "thumbnail": "assets/images/pharma.jpg",
+      "sections": [
+        {
+          "id": "sec-pharm-1",
+          "title": "حركية الدواء (Pharmacokinetics)",
+          "lessons": [
+            {
+              "id": "les-pharm-201",
+              "title": "مبادئ امتصاص وتوزيع الدواء في الجسم",
+              "durationSec": 55,
+              "video": "assets/videos/lesson2.mp4"
+            },
+            {
+              "id": "les-pharm-202",
+              "title": "الأيض الكبدي والإطراح الكلوي للدواء",
+              "durationSec": 70,
+              "video": "assets/videos/lesson3.mp4"
+            }
+          ]
+        },
+        {
+          "id": "sec-pharm-2",
+          "title": "ديناميكية وتفاعلات الدواء (Pharmacodynamics)",
+          "lessons": [
+            {
+              "id": "les-pharm-203",
+              "title": "المستقبلات الدوائية والاستجابة الحيوية",
+              "durationSec": 60,
+              "video": "assets/videos/lesson1.mp4"
+            },
+            {
+              "id": "les-pharm-204",
+              "title": "التداخلات الدوائية والتأثيرات السمية",
+              "durationSec": 80,
+              "video": "assets/videos/lesson2.mp4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
