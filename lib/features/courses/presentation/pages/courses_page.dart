@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../cubit/courses_cubit.dart';
 import '../cubit/courses_state.dart';
+import '../widgets/continue_watching_card.dart';
 import '../widgets/course_card.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -51,24 +52,42 @@ class _CoursesPageState extends State<CoursesPage> {
           }
 
           if (state is CoursesLoaded) {
+            final continueItem = state.continueWatching;
+
             return RefreshIndicator(
               onRefresh: () => context.read<CoursesCubit>().refresh(),
-              child: ListView.builder(
+              child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 12),
-                itemCount: state.courses.length,
-                itemBuilder: (context, index) {
-                  final course = state.courses[index];
-                  return CourseCard(
-                    course: course,
-                    progress: state.getCourseProgress(course.id),
-                    onTap: () {
-                      context.push(
-                        '/course/${course.id}',
-                        extra: course,
-                      );
-                    },
-                  );
-                },
+                children: [
+                  if (continueItem != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: ContinueWatchingCard(
+                        item: continueItem,
+                        onTap: () {
+                          context.push(
+                            '/course/${continueItem.course.id}/lesson/${continueItem.lesson.id}',
+                            extra: {
+                              'course': continueItem.course,
+                              'lesson': continueItem.lesson,
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ...state.courses.map(
+                    (course) => CourseCard(
+                      course: course,
+                      progress: state.getCourseProgress(course.id),
+                      onTap: () {
+                        context.push(
+                          '/course/${course.id}',
+                          extra: course,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             );
           }
