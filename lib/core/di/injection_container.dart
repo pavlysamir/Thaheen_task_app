@@ -11,6 +11,8 @@ import '../../features/progress/data/repositories/progress_repository_impl.dart'
 import '../../features/progress/domain/repositories/progress_repository.dart';
 import '../../features/progress/domain/services/progress_service.dart';
 
+import '../../features/player/presentation/cubit/player_cubit.dart';
+
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
@@ -43,6 +45,13 @@ Future<void> initDependencies() async {
   sl.registerFactory<CoursesCubit>(
     () => CoursesCubit(
       coursesRepository: sl(),
+      progressRepository: sl(),
+      progressService: sl(),
+    ),
+  );
+
+  sl.registerFactory<PlayerCubit>(
+    () => PlayerCubit(
       progressRepository: sl(),
       progressService: sl(),
     ),
