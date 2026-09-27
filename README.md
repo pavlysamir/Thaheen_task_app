@@ -7,33 +7,40 @@ A clean, offline-first Flutter application built for health-sciences students to
 ## 🚀 How to Run the App
 
 ### Prerequisites
+
 - **Flutter SDK**: 3.22.0 or higher (Tested on Flutter 3.47.5 / Dart 3.13.4)
 - **Platforms Supported**: Android, iOS, Windows, macOS, Web
 
 ### Steps
 
 1. **Clone the repository:**
+
    ```bash
    git clone <repository-url>
    cd thaheen_lms
    ```
 
 2. **Install dependencies:**
+
    ```bash
    flutter pub get
    ```
 
 3. **Run unit & widget tests:**
+
    ```bash
    flutter test
    ```
-   *(All 14 tests pass with 100% success).*
+
+   _(All 14 tests pass with 100% success)._
 
 4. **Verify static analysis:**
+
    ```bash
    flutter analyze
    ```
-   *(0 errors, 0 warnings, 0 lints).*
+
+   _(0 errors, 0 warnings, 0 lints)._
 
 5. **Launch the application:**
    ```bash
@@ -118,17 +125,21 @@ lib/
 ```
 
 ### Conceptual Domain Separation
+
 - **`courses`**: Owns static course curriculum data (`JSON` → `Models` → `Entities` via `.toEntity()`).
 - **`progress`**: Owns all progress calculations, sequential unlock business rules, and local persistence.
 - **`player`**: A coordinator orchestrating `VideoPlayerController`, `ProgressService`, and `ProgressRepository` without coupling business decisions into the UI.
 
 ### Why flutter_bloc (Cubit)?
+
 - Provides predictable, immutable, and testable state transitions.
 - Cubit eliminates the ceremony of verbose event definitions while maintaining clear boundaries between UI and logic.
 - UI components reactively rebuild only when relevant state slices change (`BlocConsumer`, `BlocBuilder`).
 
 ### Why Domain `ProgressService` Instead of 5 Separate UseCases?
+
 Rather than creating 5 individual use case classes for simple arithmetic calculations, we encapsulated the domain logic inside `ProgressService`:
+
 1. `shouldComplete({currentPositionSec, totalDurationSec})` (The 90% threshold rule).
 2. `isLessonUnlocked({lessonId, course, completedLessonIds})` (Sequential unlock rule).
 3. `calculateCourseProgress({course, completedLessonIds})` (Course % calculation).
@@ -137,6 +148,7 @@ Rather than creating 5 individual use case classes for simple arithmetic calcula
 This keeps the codebase clean and pragmatic, while allowing **100% pure, fast unit testing** without mocking dependencies.
 
 ### Why SharedPreferences for Local Persistence?
+
 - **Zero build friction:** No code generation (`build_runner`), schema migrations, or native compile steps needed.
 - **Fast:** Synchronously cached in memory after initial read.
 - **Ownership:** Scoped directly inside `ProgressLocalDataSource` where persistence belongs.
@@ -175,6 +187,7 @@ This keeps the codebase clean and pragmatic, while allowing **100% pure, fast un
 ## 🧪 Testing
 
 Unit and widget tests are located in `test/`:
+
 - `test/progress_service_test.dart`:
   - ✅ 90% rule under threshold
   - ✅ 90% rule at/above threshold
@@ -193,6 +206,7 @@ Unit and widget tests are located in `test/`:
   - ✅ `ProgressBadge` locked status rendering
 
 Run all tests via:
+
 ```bash
 flutter test
 ```
@@ -202,21 +216,13 @@ flutter test
 ## ⚖️ Trade-offs & What I'd Do With More Time
 
 ### Trade-offs:
+
 - **`SharedPreferences` vs `Hive`/`Isar`/`SQLite`:** For an offline mini-LMS storing lesson IDs and timestamps, `SharedPreferences` provides the most stable, dependency-light solution. If the curriculum expanded to thousands of courses, an embedded relational or key-value database would be preferred.
 - **Bundled Assets vs Remote Streaming:** Videos and courses are bundled offline inside `assets/`. In a full production app, video streaming (HLS/DASH) with an encrypted offline download manager would be integrated.
 
 ### With More Time:
+
 - **Dark Mode:** Add dark slate theme support for night-time studying.
 - **In-Video Bookmarks & Notes:** Enable students to write timestamped notes saved locally.
 - **Interactive Quizzes:** Short multiple-choice checkpoints at the end of each lesson before triggering completion.
 - **Picture-in-Picture (PiP):** Allow students to take notes while video plays in a floating window.
-
----
-
-## ⏱️ Time Spent
-- **Total Time:** ~4.5 hours
-  - Architecture planning & domain modeling: ~45 min
-  - Data layer, assets, & local persistence: ~45 min
-  - Player coordination & Cubit state management: ~1.5 hours
-  - Arabic RTL UI design & components: ~1 hour
-  - Unit tests, widget tests, & documentation: ~30 min
