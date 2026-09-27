@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/lesson_progress.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/localization/app_localizations.dart';
 
 class ProgressBadge extends StatelessWidget {
   final LessonStatus status;
@@ -12,6 +13,8 @@ class ProgressBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     Color bg;
     Color fg;
     IconData icon;
@@ -22,25 +25,25 @@ class ProgressBadge extends StatelessWidget {
         bg = AppTheme.success.withValues(alpha: 0.12);
         fg = AppTheme.success;
         icon = Icons.check_circle_rounded;
-        label = 'مكتمل';
+        label = l10n.completed;
         break;
       case LessonStatus.inProgress:
         bg = AppTheme.warning.withValues(alpha: 0.15);
         fg = AppTheme.warning;
         icon = Icons.play_circle_fill_rounded;
-        label = 'قيد المشاهدة';
+        label = l10n.inProgress;
         break;
       case LessonStatus.locked:
         bg = AppTheme.locked.withValues(alpha: 0.12);
         fg = AppTheme.locked;
         icon = Icons.lock_outline_rounded;
-        label = 'مُقفل';
+        label = l10n.locked;
         break;
       case LessonStatus.notStarted:
         bg = const Color(0xFFE2E8F0);
         fg = AppTheme.textSecondary;
         icon = Icons.radio_button_unchecked_rounded;
-        label = 'لم يبدأ';
+        label = l10n.notStarted;
         break;
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/utils/duration_formatter.dart';
 import '../../../progress/domain/services/progress_service.dart';
 
@@ -14,6 +15,7 @@ class ContinueWatchingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final pos = item.progress.lastPositionSeconds;
     final dur = item.lesson.durationSec;
     final progressRatio = dur > 0 ? (pos / dur).clamp(0.0, 1.0) : 0.0;
@@ -57,18 +59,18 @@ class ContinueWatchingCard extends StatelessWidget {
                         color: Colors.white.withValues(alpha: 0.18),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.play_circle_fill_rounded,
                             color: Colors.white,
                             size: 15,
                           ),
-                          SizedBox(width: 6),
+                          const SizedBox(width: 6),
                           Text(
-                            'متابعة التعلّم',
-                            style: TextStyle(
+                            l10n.continueWatching,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -141,17 +143,17 @@ class ContinueWatchingCard extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.play_arrow_rounded,
                             size: 16,
                             color: Color(0xFF0F766E),
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
-                            'استئناف المشاهدة',
-                            style: TextStyle(
+                            l10n.resumeLesson,
+                            style: const TextStyle(
                               color: Color(0xFF0F766E),
                               fontSize: 13,
                               fontWeight: FontWeight.bold,

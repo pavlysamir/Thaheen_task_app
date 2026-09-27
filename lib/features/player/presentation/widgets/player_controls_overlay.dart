@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/localization/app_localizations.dart';
 import '../../../../core/utils/duration_formatter.dart';
 import '../cubit/player_state.dart';
 import 'playback_speed_dialog.dart';
@@ -84,6 +85,7 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final state = widget.state;
 
     return GestureDetector(
@@ -120,7 +122,7 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay> {
                               color: Colors.white,
                               size: 22,
                             ),
-                            tooltip: 'إغلاق',
+                            tooltip: l10n.close,
                           ),
                           const SizedBox(width: 8),
                           Expanded(
@@ -315,7 +317,7 @@ class _PlayerControlsOverlayState extends State<PlayerControlsOverlay> {
                                         : Colors.white.withValues(alpha: 0.4),
                                   ),
                                   label: Text(
-                                    'الدرس التالي',
+                                    l10n.nextLesson,
                                     style: TextStyle(
                                       color: state.isNextLessonUnlocked
                                           ? Colors.white

@@ -8,7 +8,7 @@ import '../../features/player/presentation/pages/lesson_player_page.dart';
 import '../di/injection_container.dart';
 import '../../features/courses/domain/repositories/courses_repository.dart';
 
-GoRouter createRouter({VoidCallback? onToggleLanguage}) {
+GoRouter createRouter({required VoidCallback onToggleLanguage}) {
   return GoRouter(
     initialLocation: '/',
     routes: [

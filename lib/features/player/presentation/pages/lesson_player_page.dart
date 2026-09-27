@@ -5,6 +5,7 @@ import 'package:video_player/video_player.dart';
 
 import 'package:thaheen_lms/core/di/injection_container.dart';
 import 'package:thaheen_lms/core/theme/app_theme.dart';
+import 'package:thaheen_lms/core/localization/app_localizations.dart';
 import 'package:thaheen_lms/features/courses/domain/entities/course.dart';
 import 'package:thaheen_lms/features/courses/domain/entities/lesson.dart';
 import '../cubit/player_cubit.dart';
@@ -45,6 +46,8 @@ class _LessonPlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return BlocConsumer<PlayerCubit, PlayerState>(
       listenWhen: (previous, current) => current.justCompletedNow,
       listener: (context, state) {
@@ -54,17 +57,17 @@ class _LessonPlayerView extends StatelessWidget {
             SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: AppTheme.success,
-              content: const Row(
+              content: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check_circle_rounded,
                     color: Colors.white,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'أحسنت! تم إكمال الدرس بنجاح 🎉',
-                      style: TextStyle(
+                      l10n.lessonCompletedToast,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -173,8 +176,8 @@ class _LessonPlayerView extends StatelessWidget {
                               const SizedBox(width: 4),
                               Text(
                                 state.isCompleted
-                                    ? 'مكتمل'
-                                    : 'قيد المشاهدة',
+                                    ? l10n.completed
+                                    : l10n.inProgress,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -223,7 +226,7 @@ class _LessonPlayerView extends StatelessWidget {
                     // Next Lesson Action Card
                     if (state.nextLesson != null) ...[
                       Text(
-                        'الدرس التالي',
+                        l10n.nextLesson,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -282,8 +285,8 @@ class _LessonPlayerView extends StatelessWidget {
                                   const SizedBox(height: 2),
                                   Text(
                                     state.isNextLessonUnlocked
-                                        ? 'الدرس التالي'
-                                        : 'يجب إكمال الدرس السابق أولاً لفتح هذا الدرس 🔒',
+                                        ? l10n.nextLesson
+                                        : l10n.lockedMessage,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: state.isNextLessonUnlocked
@@ -306,7 +309,7 @@ class _LessonPlayerView extends StatelessWidget {
                                     vertical: 8,
                                   ),
                                 ),
-                                child: const Text('الدرس التالي'),
+                                child: Text(l10n.nextLesson),
                               ),
                           ],
                         ),
@@ -328,6 +331,8 @@ class _LessonPlayerView extends StatelessWidget {
     PlayerCubit cubit,
     VideoPlayerController? controller,
   ) {
+    final l10n = AppLocalizations.of(context);
+
     if (state.status == PlayerStatus.loading) {
       return const Center(
         child: CircularProgressIndicator(color: AppTheme.primaryLight),
@@ -348,7 +353,7 @@ class _LessonPlayerView extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                state.errorMessage ?? 'حدث خطأ أثناء تحميل الفيديو',
+                state.errorMessage ?? l10n.errorLoading,
                 style: const TextStyle(color: Colors.white, fontSize: 13),
                 textAlign: TextAlign.center,
               ),
@@ -359,7 +364,7 @@ class _LessonPlayerView extends StatelessWidget {
                   lesson: lesson,
                 ),
                 icon: const Icon(Icons.refresh_rounded, size: 16),
-                label: const Text('إعادة المحاولة'),
+                label: Text(l10n.retry),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
                   side: const BorderSide(color: Colors.white54),
