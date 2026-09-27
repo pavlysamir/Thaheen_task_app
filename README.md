@@ -149,9 +149,7 @@ This keeps the codebase clean and pragmatic, while allowing **100% pure, fast un
 
 ### Why SharedPreferences for Local Persistence?
 
-- **Zero build friction:** No code generation (`build_runner`), schema migrations, or native compile steps needed.
-- **Fast:** Synchronously cached in memory after initial read.
-- **Ownership:** Scoped directly inside `ProgressLocalDataSource` where persistence belongs.
+I chose SharedPreferences because the app only persists a small amount of structured progress data locally. There are no relational queries, large datasets, or complex offline synchronization requirements, so a lightweight key-value store keeps the implementation simple and appropriate for the scope.
 
 ---
 
