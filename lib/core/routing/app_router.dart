@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/courses/domain/entities/course.dart';
+import '../../features/courses/presentation/pages/courses_page.dart';
+import '../../features/courses/presentation/pages/course_detail_page.dart';
+import '../di/injection_container.dart';
+import '../../features/courses/domain/repositories/courses_repository.dart';
 
 GoRouter createRouter({VoidCallback? onToggleLanguage}) {
   return GoRouter(
@@ -7,15 +12,32 @@ GoRouter createRouter({VoidCallback? onToggleLanguage}) {
     routes: [
       GoRoute(
         path: '/',
-        name: 'home',
-        builder: (context, state) => const Scaffold(
-          body: Center(
-            child: Text(
-              'Thaheen LMS',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-          ),
+        name: 'courses',
+        builder: (context, state) => CoursesPage(
+          onToggleLanguage: onToggleLanguage,
         ),
+      ),
+      GoRoute(
+        path: '/course/:courseId',
+        name: 'course-detail',
+        builder: (context, state) {
+          final course = state.extra as Course?;
+          if (course != null) {
+            return CourseDetailPage(course: course);
+          }
+          final courseId = state.pathParameters['courseId'] ?? '';
+          return FutureBuilder<Course>(
+            future: sl<CoursesRepository>().getCourseById(courseId),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return CourseDetailPage(course: snapshot.data!);
+              }
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            },
+          );
+        },
       ),
     ],
   );
